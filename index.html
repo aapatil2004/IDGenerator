@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Card Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <h1>ID Card Generator</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="csvFile">Upload CSV File:</label>
+            <input type="file" id="csvFile" accept=".csv" required>
+            <br>
+            <label for="templateImage">Upload Template Image (PNG):</label>
+            <input type="file" id="templateImage" accept=".png" required>
+        </form>
+
+        <!-- <button onclick="generateIDCards()">Generate ID Cards</button> -->
+
+        <!-- <div id="idCardList"></div> -->
+
+        <a id="downloadBtn" download="id_cards.zip" href="#">Download All ID Cards</a>
+    </div>
+
+   
+</body>
+</html>
