@@ -9,7 +9,7 @@ import io
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
-ALLOWED_EXTENSIONS = {'csv', 'png'}
+ALLOWED_EXTENSIONS = {'csv', 'png', 'jpeg'}
 
 # Ensure the upload folder exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -17,46 +17,62 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def justify_text(draw, text, position, width, font, fill_color, justification="left"):
+    text_width, text_height = draw.textsize(text, font)
+
+    if justification == "left":
+        x = position[0]
+    elif justification == "center":
+        x = position[0] + (width - text_width) // 2
+    elif justification == "right":
+        x = position[0] + (width - text_width)
+    else:
+        raise ValueError("Invalid justification. Use 'left', 'center', or 'right'.")
+
+    y = position[1]
+
+    draw.text((x, y), text, font=font, fill=fill_color)
+
 def generate_id_card(csv_data, template_path, zip_file):
-    # Open the template image
     template = Image.open(template_path)
-
-    # Set up drawing context
     draw = ImageDraw.Draw(template)
-    font = ImageFont.load_default()  # You can customize the font
+    font_path = "C:/Windows/Fonts/Calibri.ttf"
+    
+    name_font_size = 70
+    portfolio_font_size = 50
+    
+    name_font = ImageFont.truetype(font_path, name_font_size)
+    portfolio_font = ImageFont.truetype(font_path, portfolio_font_size)
 
-    # Convert CSV data to a dictionary for easier processing
     csv_dict = csv_data.to_dict()
+    
+    
+    x_name = (template.width - 400) // 2  # Adjust as needed
+    y_name = 970
+    name_width = 400  # Width for justification
 
-    # Define positions for each piece of information
-    x_name = 280
-    y_name = 51
+    x_portfolio = (template.width - 400) // 2  # Adjust as needed
+    y_portfolio = 1070
+    portfolio_width = 400  # Width for justification
 
-    x_id = 280
-    y_id = 110
-
-    # Insert data from the CSV file into the template
     for key, value in csv_dict.items():
         if key == 'Name':
             text = f"{value}"
             position = (x_name, y_name)
-            y_name += 30  # Adjust the vertical spacing as needed
-        elif key == 'ID':
+            justify_text(draw, text, position, name_width, name_font, "white", justification="center")
+            y_name += 30
+        elif key == 'portfolio':
             text = f"{value}"
-            position = (x_id, y_id)
-            y_id += 30  # Adjust the vertical spacing as needed
+            position = (x_portfolio, y_portfolio)
+            justify_text(draw, text, position, portfolio_width, portfolio_font, "white", justification="center")
+            y_portfolio += 30
         else:
-            # Handle additional fields as needed
             continue
 
-        draw.text(position, text, fill="black", font=font)
-
-    # Save the modified image to a BytesIO buffer
     img_buffer = io.BytesIO()
     template.save(img_buffer, format="PNG")
     img_buffer.seek(0)
 
-    # Add the image to the zip file
     zip_info = zipfile.ZipInfo(f"id_card_{int(time.time())}.png")
     zip_info.date_time = time.localtime(time.time())[:6]
     zip_info.compress_type = zipfile.ZIP_DEFLATED
