@@ -36,7 +36,7 @@ def justify_text(draw, text, position, width, font, fill_color, justification="l
 def generate_id_card(csv_data, template_path, zip_file):
     template = Image.open(template_path)
     draw = ImageDraw.Draw(template)
-    font_path = "C:/Windows/Fonts/Calibri.ttf"
+    font_path = "/home/shreyash/ananda-black-font/AnandaBlackPersonalUseRegular-rg9Rx.ttf" # Replace with your own font file path
     
     name_font_size = 70
     portfolio_font_size = 50

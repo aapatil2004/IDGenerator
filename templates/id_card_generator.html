@@ -1,56 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ID Card Generator</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
-  </head>
-  <body>
-    <div id="container">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ID Card Generator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="title">
       <h1>ID Card Generator</h1>
-      <form
-        id="uploadForm"
-        enctype="multipart/form-data"
-        action="{{ url_for('id_card_generator') }}"
-        method="post"
-      >
-        <label for="csvFile">Upload CSV File:</label>
-        <input type="file" name="csvFile" id="csvFile" accept=".csv" required />
-        <br />
-        <label for="templateImage">Upload Template Image (PNG):</label>
-        <input
-          type="file"
-          name="templateImage"
-          id="templateImage"
-          accept=".png"
-          required
-        />
-        <br />
+      <p>Effortlessly Generate Professional ID Cards from CSV Data and Image Templates with Ease!</p>
+    </div>
+    <div class="steps">
+      <h2>Steps To Follow:-</h2>
+      <ul>
+        <li>
+          Insert Your CSV File.
+        </li>
+        <li>
+          Insert Your ID Card Template.
+        </li>
+        <li>Click Download Button.</li>
+      </ul>
+    </div>
+    <div class="startBtn">
+      <button>Get Started</button>
+    </div>
+    <div class="insert-file">
+      <form id="uploadForm" enctype="multipart/form-data" action="{{ url_for('id_card_generator') }}" method="post">
+
+        <label for="csvFile" class="drop-area" id="csvDropArea" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" ondragenter="dragEnterHandler(event)" ondragleave="dragLeaveHandler(event)">
+          <input type="file" name="csvFile" accept=".csv" id="csvFile" hidden onchange="handleFiles(this.files)">
+          <div class="img-view">
+            <img class="preview-image" src="../static/Images/508-icon.png" alt="upload image">
+            <p>Drag and Drop or click here <br> to upload CSV File</p>
+            <span>Upload any CSV from desktop</span>
+          </div>
+        </label>
+
+        <label for="templateImage" class="drop-area" id="imageDropArea" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" ondragenter="dragEnterHandler(event)" ondragleave="dragLeaveHandler(event)">
+          <input type="file" name="templateImage" accept=".png" id="templateImage" hidden onchange="handleFiles(this.files)">
+          <div class="img-view">
+            <img class="preview-image" src="../static/Images/508-icon.png" alt="upload image">
+            <p>Drag and Drop or click here <br> to upload image</p>
+            <span>Upload any images from desktop</span>
+          </div>
+        </label>
         <button type="submit">Generate ID Cards</button>
       </form>
-
-      <a
-        id="downloadBtn"
-        href="{{ url_for('id_card_generator') }}"
-        style="display: none"
-        >Download All ID Cards</a
-      >
-
-      <div id="idCardList"></div>
     </div>
+  </div>
 
-    <script>
-      document
-        .getElementById("uploadForm")
-        .addEventListener("submit", function (event) {
-          // Display the "Generating..." message
-          document.getElementById("downloadBtn").innerText = "Generating...";
-          document.getElementById("downloadBtn").style.display = "block";
-        });
-    </script>
-  </body>
+  <script>
+    function handleFiles(files) {
+  const file = files[0];
+
+  if (file.type === 'image/png' || file.type === 'image/jpeg') {
+    const previewImages = document.querySelectorAll('.preview-image');
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+      previewImages.forEach(function(element) {
+        element.src = e.target.result;
+      });
+    };
+
+    reader.readAsDataURL(file);
+
+    // Reset CSV drop area
+    const csvDropArea = document.getElementById('csvDropArea');
+    csvDropArea.classList.remove('drag-over');
+  } else if (file.type === 'text/csv') {
+    // Set the preview image for CSV file
+    const previewImages = document.querySelectorAll('.preview-image');
+    previewImages.forEach(function(element) {
+      element.src = '../static/Images/tick-40143_1280.png'; // Replace with the tick image path
+    });
+
+    // Reset image drop area
+    const imageDropArea = document.getElementById('imageDropArea');
+    imageDropArea.classList.remove('drag-over');
+  } else {
+    alert('Please select a valid file.');
+  }
+}
+
+  </script>
+  
+  
+</body>
 </html>

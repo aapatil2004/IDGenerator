@@ -1,110 +1,105 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap');
-body {
-    font-family: Poppins;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-    box-sizing: border-box;
-    /* background-image: linear-gradient(to bottom right, rgb(235, 187, 255) , rgb(123, 138, 255),rgb(255, 161, 177)); */
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
-.main{
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: linear-gradient(to bottom right, rgb(235, 187, 255) , rgb(123, 138, 255),rgb(255, 161, 177));
+.container {
+  max-width: 1340px;
+  height: 100vh;
+  margin: 0px auto;
 }
 
-#container {
-    /* max-width: 600px; */
-    width: 600px;
-    /* margin: auto auto; */
-    margin:0;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 20px rgba(0, 0, 0);
+.title {
+  margin-top: 10rem;
+  text-align: center;
+  padding-top: 1rem;
 }
 
-h1 {
-    text-align: center;
-    color: #333;
-    font-weight: 800;
-    font-size: 3rem;
-    text-transform: uppercase;
-    border-bottom: 2px solid black;
+.title h1 {
+  text-transform: uppercase;
+  font-size: 6rem;
+  font-family: 'Roboto Slab', serif;
+  color: rgb(53, 88, 0);
+  border-bottom: 2px solid gray;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Roboto Slab;
+.title p {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  font-family: monospace;
 }
 
-label {
-    margin-top: 10px;
-    font-size: 1.5rem;
+.steps {
+  margin-top: 2rem;
+  padding: 1rem;
 }
 
-input[type="file"] {
-    margin-top: 5px;
-    font-size: 1.2rem;
-    text-align: center;
-    position: relative;
-    left: 3rem;
-}
-.input{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.steps h2 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 3rem;
 }
 
+.steps ul {
+  padding-left: 1.5rem;
+}
 
+.steps ul li {
+  list-style-type: decimal;
+  font-size: 1.5rem;
+  line-height: 3rem;
+}
+
+.startBtn {
+  margin: 3rem;
+}
 
 button {
-    margin-top: 10px;
-    background-color: #007bff;
-    color: #fff;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: Roboto Slab;
-    font-size: 1.7rem;
+  border: none;
+  font-weight: bold;
+  border-radius: 10px;
+  color: black;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1.6rem;
+  padding: 1rem 2rem;
+  background-color: rgb(172, 255, 48);
+  transition-duration: 0.5s;
 }
 
 button:hover {
-    background-color: #0056b3;
+  box-shadow: 5px 5px 5px black;
 }
 
-#downloadBtn {
-    display: block;
-    margin-top: 20px;
-    background-color: #28a745;
-    color: #fff;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 4px;
+.drop-area {
+  width: 500px;
+  height: 300px;
+  padding: 30px;
+  background: #fff;
+  text-align: center;
+  border-radius: 20px;
 }
 
-#downloadBtn:hover {
-    background-color: #218838;
+.drop-area.drag-over {
+  border: 2px dashed #6c63ff;
 }
 
-#idCardList {
-    margin-top: 20px;
+.img-view {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: 2px dashed #bbb5ff;
+  background: #f7f8ff;
 }
 
-/* Additional styling for responsiveness */
-@media screen and (max-width: 650px) {
-    
-    #container {
-        width: 70vw;
-    }
-    #container h1{
-        font-size: 2rem;
-    }
+.img-view img {
+  width: 100px;
+  margin-top: 25px;
+}
+
+.img-view span {
+  display: block;
+  font-size: 12px;
+  color: #777;
+  margin-top: 15px;
 }
